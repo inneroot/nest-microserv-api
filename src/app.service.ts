@@ -20,6 +20,6 @@ export class AppService {
 
   async getResponse(data: string) {
     this.logger.log(`getResponse: ${data}`)
-    return await this.client.send<string, string>('message', 'hello from API')
+    return await this.client.send<string, Object>('message', { msg: data})
   }
 }
