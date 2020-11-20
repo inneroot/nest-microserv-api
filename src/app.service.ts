@@ -3,10 +3,9 @@ import { Logger } from '@nestjs/common';
 import { ClientOptions, ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices';
 
 const microserviceOptions: ClientOptions = {
-  transport: Transport.TCP,
+  transport: Transport.NATS,
   options: {
-    host: '127.0.0.1',
-    port: 8877
+    url: 'nats://localhost:4222',
   },
 }
 
