@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Logger } from '@nestjs/common';
 import { ClientOptions, ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices';
 
@@ -11,18 +11,17 @@ const microserviceOptions: ClientOptions = {
 
 @Injectable()
 export class AppService {
-  private client: ClientProxy;
   private logger = new Logger('API service')
 
-  constructor(){
-    this.client = ClientProxyFactory.create(microserviceOptions)
-  }
+  constructor(
+    @Inject('NATS') private client: ClientProxy,
+  ) {}
 
   async getResponse(data: string) {
     this.logger.log(`getResponse: ${data}`)
-    const message = data
-    //return await this.client.send<string, Object>('message', { msg: data})
+    const message = data    
     this.client.emit('log', message)
-    return await this.client.send<string, string>('message', message )
+    const response: any = this.client.send<string, string>('message', message )
+    return response
   }
 }
