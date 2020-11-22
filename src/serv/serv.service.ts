@@ -10,7 +10,7 @@ const microserviceOptions: ClientOptions = {
 }
 
 @Injectable()
-export class AppService {
+export class ServService {
   private logger = new Logger('API service')
 
   constructor(
