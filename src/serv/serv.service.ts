@@ -2,13 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Logger } from '@nestjs/common';
 import { ClientOptions, ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices';
 
-const microserviceOptions: ClientOptions = {
-  transport: Transport.NATS,
-  options: {
-    url: 'nats://localhost:4222',
-  },
-}
-
 @Injectable()
 export class ServService {
   private logger = new Logger('API service')
