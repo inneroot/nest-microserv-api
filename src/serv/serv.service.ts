@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Logger } from '@nestjs/common';
 import { ClientOptions, ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices';
+import { ReturnFromService } from './interfaces/returnFromService';
 
 @Injectable()
 export class ServService {
@@ -11,10 +12,16 @@ export class ServService {
   ) {}
 
   async getResponse(data: string) {
+    // return new Promise( (resolve, reject) =>{
+
+    // })
+
     this.logger.log(`getResponse: ${data}`)
-    const message = data    
+    const message = data
     this.client.emit('log', message)
-    const response: any = this.client.send<string, string>('message', message )
-    return response
+    //send <ReturnType, ParamType>(pattern, param)
+    const response = await this.client.send<ReturnFromService, string>('message', message ).toPromise();
+    const answer = response.msg + '_some_'
+    return answer
   }
 }
